@@ -21,11 +21,13 @@ class MainActivity : AppCompatActivity() {
 
         val downloadData = DownloadData()
         downloadData.execute("http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=10/xml")
+        Log.d("xxx", downloadData.toString());
     }
 
     companion object {
         private class DownloadData : AsyncTask<String, Void, String>() {
             override fun onPostExecute(result: String?) {
+                Log.d("onPostExecute Data", result.toString())
                 super.onPostExecute(result)
             }
 
