@@ -1,16 +1,9 @@
 package com.gamebit.thetop10downloaderapp
 
 import android.os.AsyncTask
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
-import java.lang.Exception
-import java.lang.StringBuilder
-import java.net.HttpURLConnection
-import java.net.MalformedURLException
+import androidx.appcompat.app.AppCompatActivity
 import java.net.URL
 
 class MainActivity : AppCompatActivity() {
@@ -41,36 +34,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         private fun downloadXML(urlPath : String?): String{
-            val xmlResult = StringBuilder()
-            try {
-                val url = URL(urlPath)
-                val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
-                val response = connection.responseCode
-                Log.d("downloadXML", "responseCode$response")
-
-                val inputStream = connection.inputStream
-                val inputStreamReader = InputStreamReader(inputStream)
-                val reader = BufferedReader(inputStreamReader)
-
-                val inputBuffer = CharArray(500)
-                var charsRead = 0
-                while (charsRead >= 0) {
-                    charsRead = reader.read(inputBuffer)
-                    if (charsRead > 0) {
-                        xmlResult.append(String(inputBuffer, 0, charsRead))
-                    }
-                }
-                reader.close()
-                Log.d("Received", "${xmlResult.length} bytes")
-                return xmlResult.toString()
-            }catch (e: Exception) {
-                e.printStackTrace()
-            }
-            return "" // If it gets to here, return an empty string
+            return URL(urlPath).readText()
         }
     }
-
-
 }
 
 
