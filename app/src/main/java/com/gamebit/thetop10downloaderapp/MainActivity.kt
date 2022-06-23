@@ -1,10 +1,15 @@
 package com.gamebit.thetop10downloaderapp
 
+import android.content.Context
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import java.net.URL
+import kotlin.properties.Delegates
 
 class FeedEntry {
     var name: String = ""
@@ -30,17 +35,29 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val downloadData = DownloadData()
+        val downloadData = DownloadData(this, xmlListView)
         downloadData.execute("http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=10/xml")
         Log.d("xxx", downloadData.toString());
     }
 
     companion object {
-        private class DownloadData : AsyncTask<String, Void, String>() {
+        private class DownloadData(context: Context, listView: ListView) : AsyncTask<String, Void, String>() {
+
+            var propContext : Context by Delegates.notNull()
+            var propListView : ListView by Delegates.notNull()
+
+            init {
+                propContext = context
+                propListView = listView
+            }
+
             override fun onPostExecute(result: String) {
                 super.onPostExecute(result)
                 val parseApplications = ParseApplications()
                 parseApplications.parse(result)
+
+                val arrayAdapter = ArrayAdapter<FeedEntry>(propContext, R.layout.list_item, parseApplications.applications)
+                propListView.adapter = arrayAdapter
             }
 
             override fun doInBackground(vararg url: String?): String {
