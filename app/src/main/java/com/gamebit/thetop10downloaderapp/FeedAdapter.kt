@@ -22,7 +22,12 @@ class FeedAdapter(context: Context, private val resource: Int, private val appli
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
         Log.d(TAG, "getView() called")
-        val view = inflater.inflate(resource, parent, false)
+        val view: View
+        if (convertView == null) {
+            view = inflater.inflate(resource, parent, false)
+        }    else {
+            view = convertView
+        }
 
         val tvName: TextView = view.findViewById(R.id.tvName)
         val tvArtist: TextView = view.findViewById(R.id.tvArtist)
