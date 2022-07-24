@@ -1,16 +1,11 @@
 package com.gamebit.thetop10downloaderapp
 
-import android.content.Context
-import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import java.net.URL
-import kotlin.properties.Delegates
 
 class FeedEntry {
     var name: String = ""
