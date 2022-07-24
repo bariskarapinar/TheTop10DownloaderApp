@@ -26,8 +26,6 @@ class FeedEntry {
 }
 
 class MainActivity : AppCompatActivity() {
-
-    private var downloadData: DownloadData? = null
     private var feedUrl: String = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit="
     private var feedLimit = 10
     private var postFix: String = "/xml"
@@ -37,12 +35,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         downloadUrl(feedUrl + feedLimit +postFix)
-    }
-
-    private fun downloadUrl(feedURL: String) {
-        downloadData = DownloadData(this, xmlListView)
-        downloadData?.execute(feedURL)
-        Log.d("Download Data", downloadData.toString())
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -69,11 +61,6 @@ class MainActivity : AppCompatActivity() {
         }
         downloadUrl(feedUrl + feedLimit +postFix)
         return true
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        downloadData?.cancel(true)
     }
 }
 
